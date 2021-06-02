@@ -6,7 +6,7 @@ namespace LinkedListImplementation
 {
     class LinkedList
     {
-        internal Node head;
+        internal Node head; //new 
         internal void Add(int data)
         {
             Node node = new Node(data);
@@ -21,37 +21,76 @@ namespace LinkedListImplementation
                 }
                 temp.next = node;
             }
-
+            Console.WriteLine("{0} inserted into the linked list", node.data);
         }
-        public void InsertAtParticularPosition(int position, int data)
+
+        internal void Display()
         {
-            Node node = new Node(data);
-            if (position < 1)
-                Console.WriteLine("Invalid Position");
-            else if (position == 1)
+            Node temp = this.head;
+            if (temp == null)
             {
-                node.next = head;
-                head = node;
+                Console.WriteLine("Linked list is empty");
+                return;
+            }
+            while (temp != null)
+            {
+                Console.Write(temp.data + " ");
+                temp = temp.next; //temp=null
+            }
+        }
+        // 3 15
+        internal Node InsertAtParticularPosition(int position, int data)
+        {
+            if (position < 1)
+                Console.WriteLine("Invalid position");
+            if (position == 1)
+            {
+                var newNode = new Node(data);
+                newNode.next = this.head;
+                head = newNode;
             }
             else
             {
-                Node temp = head;
-
-                while (position > 2)
+                Node temp = this.head;
+                while (position-- != 0) //
                 {
-                    temp = temp.next;
-                    position--;
+
+                    if (position == 1)
+                    {
+                        Node node = new Node(data);
+                        node.next = this.head.next;
+                        head.next = node;
+                        break;
+                    }
+                    temp = temp.next;//1000
                 }
-                node.next = temp.next;
-                temp.next = node;
+                if (position != 1)
+                    Console.WriteLine("Position out of range");
             }
+            return head;
         }
+
         internal Node RemoveFirstNode()
         {
             if (this.head == null)
                 return null;
             this.head = this.head.next;
             return this.head;
+        }
+
+        internal Node RemovaLastNode()
+        {
+            if (head == null)
+                return null;
+            if (head.next == null)
+                return null;
+            Node newNode = head;
+            while (newNode.next.next != null)
+            {
+                newNode = newNode.next;
+            }
+            newNode.next = null;
+            return head;
         }
         internal Node RemoveLastNode()
         {
@@ -68,19 +107,19 @@ namespace LinkedListImplementation
             return head;
         }
 
-        internal void Display()
+        internal Node Search(int value)
         {
-            if (this.head == null)
-                Console.WriteLine("The list is empty.");
-            else
+            while (this.head != null)
             {
-                Node temp = head;
-                while (temp != null)
+                if (this.head.data == value)
                 {
-                    Console.WriteLine(temp.data);
-                    temp = temp.next;
+                    return this.head;
                 }
+                this.head = this.head.next;
             }
+            return null;
         }
+
+
     }
 }
