@@ -1,13 +1,12 @@
-﻿using LinkedList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Day16DataStructures
+namespace LinkedListImplementation
 {
     class LinkedList
     {
-        internal Node head; //new 
+        internal Node head;
         internal void Add(int data)
         {
             Node node = new Node(data);
@@ -22,21 +21,50 @@ namespace Day16DataStructures
                 }
                 temp.next = node;
             }
-            Console.WriteLine("{0} inserted into the linked list", node.data);
-        }
 
+        }
+        public void InsertAtParticularPosition(int position, int data)
+        {
+            Node node = new Node(data);
+            if (position < 1)
+                Console.WriteLine("Invalid Position");
+            else if (position == 1)
+            {
+                node.next = head;
+                head = node;
+            }
+            else
+            {
+                Node temp = head;
+
+                while (position > 2)
+                {
+                    temp = temp.next;
+                    position--;
+                }
+                node.next = temp.next;
+                temp.next = node;
+            }
+        }
+        internal Node RemoveFirstNode()
+        {
+            if (this.head == null)
+                return null;
+            this.head = this.head.next;
+            return this.head;
+        }
         internal void Display()
         {
-            Node temp = this.head;
-            if (temp == null)
+            if (this.head == null)
+                Console.WriteLine("The list is empty.");
+            else
             {
-                Console.WriteLine("Linked list is empty");
-                return;
-            }
-            while (temp != null)
-            {
-                Console.Write(temp.data + " ");
-                temp = temp.next; //temp=null
+                Node temp = head;
+                while (temp != null)
+                {
+                    Console.WriteLine(temp.data);
+                    temp = temp.next;
+                }
             }
         }
     }
